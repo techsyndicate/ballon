@@ -1,0 +1,32 @@
+<p>Be very careful! Clicking on any party will submit your vote, just like a regular EVM.</p>
+{{#if checkVote}}
+    {{#each parties}}
+        {{#if this.name votedFor}}
+            <div class="card-voted">
+                <div style="margin-left: 20px;">
+                    <p class="card-text">{{this.name}}</p>
+                    <img src="{{this.symbol}}" width="80" height="80" alt="Party symbol"/>
+                </div>
+            </div>
+        {{else}}
+            <div class="card">
+                <div style="margin-left: 20px;">
+                    <p class="card-text">{{this.name}}</p>
+                    <img src="{{this.symbol}}" width="80" height="80" alt="Party symbol"/>
+                </div>
+            </div>
+        {{/if}}
+    {{/each}}
+{{else}}
+    {{#each parties}}
+        <form method="post" action="/election">
+            <div class="card" onclick="javascript:this.parentNode.submit();">
+                <input type="hidden" name="party" value="{{this.name}}"/>
+                <div style="margin-left: 20px;">
+                    <p class="card-text">{{this.name}}</p>
+                    <img src="{{this.symbol}}" width="80" height="80" alt="Party symbol"/>
+                </div>
+            </div>
+        </form>
+    {{/each}}
+{{/if}}

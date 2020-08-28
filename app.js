@@ -32,6 +32,12 @@ require('./lib/passport')(passport);
 
 app.use('/', indexRouter);
 
+app.use(function (req, res, next) {
+  console.log(req.isAuthenticated());
+  console.log(req.user);
+  next();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

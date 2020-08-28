@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Lexend Deca', sans-serif;
   background-image: url('../bg.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -27,7 +29,7 @@ a {
   text-decoration: underline;
 }
 
-#card {
+.card {
   box-shadow: 5px 5px 5px #eaeaea; 
   width: 20%; 
   padding: 10px; 
@@ -39,7 +41,7 @@ a {
   cursor: pointer;
 }
 
-#card-selected {
+.card-selected {
   box-shadow: 5px 5px 5px #eaeaea; 
   width: 20%; 
   padding: 10px; 
@@ -50,6 +52,11 @@ a {
   margin-right: 30px;
 }
 
-#card-text {
+.card-text {
   color: #707070;
+}
+
+.card-voted {
+  background-color: #696eff;
+  color: #fff;
 }

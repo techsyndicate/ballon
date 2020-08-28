@@ -1,12 +1,27 @@
 <h1>Ongoing Elections</h1>
 {{#each elections}}
-<div {{#if this.active}} id="card" onclick="location.href='/election';"{{else}} id="card-selected" {{/if}}>
-    <form action="/election" method="POST">
-        <div style="margin-left: 20px;">
-            <p id="card-text">{{this.name}}</p>
-            <p id="card-text">{{this.state}}</p>
-            <p id="card-text">{{this.date}}</p>
-        </div>
-    </form>
+{{#if this.active}}
+<form method="get" action="/election">
+<div class="card" onclick="javascript:this.parentNode.submit();">
+    <div style="margin-left: 20px;">
+        <p class="card-text">
+            {{this.name}}<br/>
+            {{this.state}}<br/>
+            {{this.date}}<br/>
+        </p>
+    </div>
+    <input type="hidden" name="id" value="{{this.id}}"/>
 </div>
+</form>
+{{else}}
+<div class="card-selected">
+    <div style="margin-left: 20px;">
+        <p class="card-text">
+            {{this.name}}<br/>
+            {{this.state}}<br/>
+            {{this.date}}<br/>
+        </p>
+    </div>
+</div>
+{{/if}}
 {{/each}}

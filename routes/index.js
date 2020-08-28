@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', { title: 'Login' });
+  res.render('login', { title: 'Login', layout: false });
 });
 
 router.post('/login', (req, res, next) => {
@@ -26,13 +26,6 @@ router.post('/login', (req, res, next) => {
   username = req.body.username;
 });
 
-// router.get('/register', (req, res) => {
-//   res.render('register');
-// });
-
-// router.post('/register', (req, res, next) => {
-// });
-
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
@@ -40,18 +33,19 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/dashboard', auth.checkAuth, (req, res) => {
-  var cities = indianCitiesDatabase.cities;
-  var state;
-  var elections = {};
+  const cities = indianCitiesDatabase.cities;
+  let state;
+  let elections = {};
   User.doc(username).get()
   .then(user => {
-    var city = user.data()['address'].split(',')[user.data()['address'].split(',').length - 1].trim()
+    const city = user.data()['address'].split(',')[user.data()['address'].split(',').length - 1].trim()
     cities.forEach((value, index, array) => { 
       if (value['city'] == city) {
-        state = value['state']
+        state = value['state'];
       }
-    })
-  })
+    });
+  });
+
   Election.where('ongoing', '==', true).get()
   .then(electionSnapshot => {
     electionSnapshot.forEach(election => {
@@ -75,8 +69,35 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
   })
 })
 
-router.post('/election', auth.checkAuth, (req, res) => {
-  
-})
+router.get('/election', (req, res) => {
+  console.log(req.user);
+  const electionId = req.query.id;
+  const election = Election.doc(electionId);
+  let parties = [];
+  let checkVote;
+  let votedFor;
 
+  const user = User.doc(username).get()
+    .then((user) => {
+      checkVote = user.data()['voted'];
+      votedFor = user.data()['votedFor'];
+    });
+
+  Party.where('candidate_locations', 'array-contains', electionId).get()
+    .then(partySnapshot => {
+      partySnapshot.forEach(party => {
+        parties.push(party.data());
+      });
+      res.render('election', { parties: parties, title: `${electionId} Elections`, checkVote: checkVote, votedFor: votedFor });
+    }).catch(err => console.log(err));
+});
+
+router.post('/election', (req, res) => {
+  const name = req.body.name;
+  User.doc(username).update({
+    votedFor: name,
+    voted: true
+  });
+  console.log(`You've successfully voted for ${name}.`);
+});
 module.exports = router;
