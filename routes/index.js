@@ -11,11 +11,11 @@ const indianCitiesDatabase = require('indian-cities-database');
 var username;
 
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Ballon' });
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login');
+  res.render('login', { title: 'Login' });
 });
 
 router.post('/login', (req, res, next) => {
@@ -60,13 +60,18 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
     for (var key in elections) {
       if (elections[key]['state'] == state || elections[key]['area'] == 'India') {
         elections[key]['active'] = true;
+        console.log(elections[key]['date']['_seconds'])
+        var date = new Date(1000 * elections[key]['date'])
+        elections[key]['date'] = date.toString('').split(' ')[2] + ' ' + date.toString('').split(' ')[1]
       } else {
         elections[key]['active'] = false;
+        var date = new Date(1000 * elections[key]['date'])
+        elections[key]['date'] = date.toString('').split(' ')[2] + ' ' + date.toString('').split(' ')[1]
       }
     }
     console.log(state);
     console.log(elections);
-    res.render('dashboard', {elections: elections});
+    res.render('dashboard', {elections: elections, title: 'Dashboard'});
   })
 })
 

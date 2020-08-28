@@ -4,7 +4,6 @@
 <head>
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/normalize.css' />
-  <link rel='stylesheet' href='/stylesheets/skeleton.css' />
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -13,16 +12,19 @@
 
 <body>
   <div class="container">
+    <div style="float:left; width:25%;">
+    {}
+    </div>
+    <div style="float:left; width:75%;">
     <div class="row">
-      <div id="nav" class="twelve columns">
+      <div id="nav" class="twelve columns" style="float: right;">
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/login">Login</li>
-          <li><a href="#"></a></li>
+          <li><a href="/logout" style="font-size: 20px;">Logout</a></li>
         </ul>
       </div>
     </div>
     {{{body}}}
+    </div>
   </div>
 </body>
 

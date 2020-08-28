@@ -1,7 +1,12 @@
-<p>This is an auth protected page.</p>
+<h1>Ongoing Elections</h1>
 {{#each elections}}
-<div>
-    <h1>{{this.name}}</h1>
+<div {{#if this.active}} id="card" onclick="location.href='/election';"{{else}} id="card-selected" {{/if}}>
+    <form action="/election" method="POST">
+        <div style="margin-left: 20px;">
+            <p id="card-text">{{this.name}}</p>
+            <p id="card-text">{{this.state}}</p>
+            <p id="card-text">{{this.date}}</p>
+        </div>
+    </form>
 </div>
 {{/each}}
-<a href="/logout"><button class="button button-primary">Logout</button></a>
