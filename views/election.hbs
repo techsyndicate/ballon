@@ -1,4 +1,4 @@
-<p>Be very careful! Clicking on any party will submit your vote, just like a regular EVM.</p>
+<p>Be very careful! Clicking on any party will submit your vote, just like a regular EVM. {{id}}</p>
 {{#if checkVote}}
     {{#each parties}}
         {{#if this.name votedFor}}
@@ -26,6 +26,7 @@
                     <p class="card-text">{{this.name}}</p>
                     <img src="{{this.symbol}}" width="80" height="80" alt="Party symbol"/>
                 </div>
+                <input type="hidden" name="electionId" value="{{../id}}"/>
             </div>
         </form>
     {{/each}}
