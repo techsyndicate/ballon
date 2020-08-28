@@ -16,6 +16,7 @@
     "firebase-admin": "^9.1.1",
     "hbs": "^4.1.1",
     "http-errors": "^1.6.3",
+    "indian-cities-database": "^1.0.5",
     "mongoose": "^5.10.1",
     "morgan": "^1.9.1",
     "passport": "^0.4.1",

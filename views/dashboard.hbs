@@ -1,2 +1,7 @@
 <p>This is an auth protected page.</p>
+{{#each elections}}
+<div>
+    <h1>{{this.name}}</h1>
+</div>
+{{/each}}
 <a href="/logout"><button class="button button-primary">Logout</button></a>
