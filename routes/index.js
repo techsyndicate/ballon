@@ -8,6 +8,7 @@ const Election = db.collection('elections');
 const Party = db.collection('parties');
 const auth = require('../lib/auth');
 const indianCitiesDatabase = require('indian-cities-database');
+const e = require('express');
 var username;
 
 router.get('/', (req, res, next) => {
@@ -71,6 +72,10 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
 
 router.get('/election', (req, res) => {
   const electionId = req.query.id;
+  if (voteKeys.includes(electionId)) {
+    res.redirect('/dashboard')
+  }
+  else {
   const election = Election.doc(electionId);
   let parties = [];
   let checkVote;
@@ -89,11 +94,16 @@ router.get('/election', (req, res) => {
       });
       res.render('election', { parties: parties, title: `${electionId} Elections`, checkVote: checkVote, votedFor: votedFor, id: electionId, username: username });
     }).catch(err => console.log(err));
+  }
 });
 
 router.post('/election', (req, res) => {
   const party = req.body.party;
   const electionId = req.body.electionId;
+  if (voteKeys.includes(electionId)) {
+    res.redirect('/dashboard')
+  }
+  else {
   var vote = {};
   User.doc(username).get()
   .then(user => {
@@ -104,5 +114,6 @@ router.post('/election', (req, res) => {
     });
     res.redirect('/dashboard')
   })
+}
 });
 module.exports = router;
