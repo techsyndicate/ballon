@@ -54,6 +54,7 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
     })
     for (var key in elections) {
       voteKeys = Object.keys(vote)
+      console.log(voteKeys)
       if ((elections[key]['state'] == state || elections[key]['area'] == 'India') && !(voteKeys.includes(elections[key]['id']))) {
         elections[key]['active'] = true;
         var date = new Date(1000 * elections[key]['date'])
