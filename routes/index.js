@@ -10,6 +10,8 @@ const auth = require('../lib/auth');
 const indianCitiesDatabase = require('indian-cities-database');
 const e = require('express');
 var username;
+let elections = {};
+let vote = {};
 
 router.get('/', (req, res, next) => {
   res.render('index', { title: 'Ballon' });
@@ -36,8 +38,6 @@ router.get('/logout', (req, res) => {
 router.get('/dashboard', auth.checkAuth, (req, res) => {
   const cities = indianCitiesDatabase.cities;
   let state;
-  let elections = {};
-  let vote = {};
   User.doc(username).get()
   .then(user => {
     const city = user.data()['address'].split(',')[user.data()['address'].split(',').length - 1].trim()
@@ -72,7 +72,7 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
 
 router.get('/election', (req, res) => {
   const electionId = req.query.id;
-  if (voteKeys.includes(electionId)) {
+  if (voteKeys.includes(electionId) || elections[electionId]['active'] == false) {
     res.redirect('/dashboard')
   }
   else {
@@ -100,7 +100,7 @@ router.get('/election', (req, res) => {
 router.post('/election', (req, res) => {
   const party = req.body.party;
   const electionId = req.body.electionId;
-  if (voteKeys.includes(electionId)) {
+  if (voteKeys.includes(electionId) || elections[electionId]['active'] == false) {
     res.redirect('/dashboard')
   }
   else {
