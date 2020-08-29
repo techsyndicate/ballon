@@ -60,3 +60,20 @@ a {
   background-color: #696eff;
   color: #fff;
 }
+
+.landing-title {
+  color: #696EFF;
+}
+
+.landing-button {
+    outline: none;
+    background-color: #696EFF;
+    color: #FFFFFF;
+    border: none;
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    padding-left:15px;
+    padding-right: 15px;
+}

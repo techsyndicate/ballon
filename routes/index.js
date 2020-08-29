@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', { title: 'Login', layout: false });
+  res.render('login', { title: 'Login', layout: false, username: username });
 });
 
 router.post('/login', (req, res, next) => {
@@ -65,7 +65,7 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
     }
     console.log(state);
     console.log(elections);
-    res.render('dashboard', {elections: elections, title: 'Dashboard'});
+    res.render('dashboard', {elections: elections, title: 'Dashboard', username: username});
   })
 })
 
@@ -88,7 +88,7 @@ router.get('/election', (req, res) => {
       partySnapshot.forEach(party => {
         parties.push(party.data());
       });
-      res.render('election', { parties: parties, title: `${electionId} Elections`, checkVote: checkVote, votedFor: votedFor, id: electionId });
+      res.render('election', { parties: parties, title: `${electionId} Elections`, checkVote: checkVote, votedFor: votedFor, id: electionId, username: username });
     }).catch(err => console.log(err));
 });
 
