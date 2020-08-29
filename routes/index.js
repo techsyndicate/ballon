@@ -104,7 +104,7 @@ router.post('/election', (req, res) => {
     User.doc(username).update({
       vote: vote
     });
-    res.render('dashboard')
+    res.redirect('/dashboard')
   })
 });
 module.exports = router;

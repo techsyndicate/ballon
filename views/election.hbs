@@ -1,4 +1,5 @@
-<p>Be very careful! Clicking on any party will submit your vote, just like a regular EVM. {{id}}</p>
+<div style="margin-top: 30px;">
+<p>Be very careful! Clicking on any party will submit your vote, just like a regular EVM. </p>
 {{#if checkVote}}
     {{#each parties}}
         {{#if this.name votedFor}}
@@ -31,3 +32,4 @@
         </form>
     {{/each}}
 {{/if}}
+</div>
