@@ -53,7 +53,8 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
       elections[election.id] = election.data();
     })
     for (var key in elections) {
-      if (elections[key]['state'] == state || elections[key]['area'] == 'India' && !(elections[key]['id'] in vote)) {
+      voteKeys = Object.keys(vote)
+      if ((elections[key]['state'] == state || elections[key]['area'] == 'India') && !(voteKeys.includes(elections[key]['id']))) {
         elections[key]['active'] = true;
         var date = new Date(1000 * elections[key]['date'])
         elections[key]['date'] = date.toString('').split(' ')[2] + ' ' + date.toString('').split(' ')[1]
@@ -63,14 +64,11 @@ router.get('/dashboard', auth.checkAuth, (req, res) => {
         elections[key]['date'] = date.toString('').split(' ')[2] + ' ' + date.toString('').split(' ')[1]
       }
     }
-    console.log(state);
-    console.log(elections);
     res.render('dashboard', {elections: elections, title: 'Dashboard', username: username});
   })
 })
 
 router.get('/election', (req, res) => {
-  console.log(req.user);
   const electionId = req.query.id;
   const election = Election.doc(electionId);
   let parties = [];
@@ -95,7 +93,6 @@ router.get('/election', (req, res) => {
 router.post('/election', (req, res) => {
   const party = req.body.party;
   const electionId = req.body.electionId;
-  console.log(electionId)
   var vote = {};
   User.doc(username).get()
   .then(user => {
